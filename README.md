@@ -11,6 +11,22 @@
 
 ---
 
+## Screenshots
+
+| Main Menu | Jutsu Selection |
+|:---------:|:---------------:|
+| ![Main Menu](public/screenshots/menu.png) | ![Jutsu Selection](public/screenshots/level-select.png) |
+
+| Single Player Gameplay | Local 2-Player Battle |
+|:----------------------:|:---------------------:|
+| ![Gameplay](public/screenshots/gameplay.png) | ![Battle](public/screenshots/battle.png) |
+
+| Online Lobby | Tutorial (Seal Guide) |
+|:------------:|:---------------------:|
+| ![Online Lobby](public/screenshots/online-lobby.png) | ![Tutorial](public/screenshots/tutorial.png) |
+
+---
+
 ## What is Jutsu Hero?
 
 Jutsu Hero is a rhythm game where you perform Naruto hand seals (the zodiac hand signs from the manga/anime) in front of your webcam. The game recognizes your gestures using a real-time ML model built with MediaPipe and ONNX Runtime, and translates them into jutsus that deal damage to your opponent.
