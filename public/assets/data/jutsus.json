@@ -1,0 +1,99 @@
+{
+  "jutsus": [
+    {
+      "id": "entrenamiento_12_sellos",
+      "name": "Training: The 12 Hand Seals",
+      "nameES": "Entrenamiento: Los 12 Sellos",
+      "nameJA": "十二印の修行",
+      "clan": "none",
+      "element": "none",
+      "difficultyRating": 1,
+      "sealSequence": ["rat","ox","tiger","hare","dragon","serpent","horse","ram","monkey","bird","dog","boar"],
+      "character": "art/characters/naruto_artwork.jpg"
+    },
+    {
+      "id": "kage_bunshin",
+      "name": "Shadow Clone Jutsu",
+      "nameES": "Jutsu: Clon de Sombras",
+      "nameJA": "影分身の術",
+      "clan": "none",
+      "element": "none",
+      "difficultyRating": 2,
+      "sealSequence": ["ram","serpent","tiger"],
+      "character": "art/characters/naruto_artwork.jpg"
+    },
+    {
+      "id": "rasengan",
+      "name": "Rasengan (Spiraling Sphere)",
+      "nameES": "Rasengan (Esfera Espiral)",
+      "nameJA": "螺旋丸",
+      "clan": "none",
+      "element": "wind",
+      "difficultyRating": 3,
+      "sealSequence": ["boar","ram","tiger"],
+      "character": "art/characters/naruto_artwork.jpg"
+    },
+    {
+      "id": "chidori",
+      "name": "Chidori (One Thousand Birds)",
+      "nameES": "Chidori (Millar de Aves)",
+      "nameJA": "千鳥",
+      "clan": "uchiha",
+      "element": "lightning",
+      "difficultyRating": 2,
+      "sealSequence": ["ox","hare","monkey"],
+      "character": "art/characters/sasuke_artwork.jpg"
+    },
+    {
+      "id": "katon_goukakyuu",
+      "name": "Fire Style: Fireball Jutsu",
+      "nameES": "Estilo de Fuego: Jutsu Gran Bola de Fuego",
+      "nameJA": "火遁・豪火球の術",
+      "clan": "uchiha",
+      "element": "fire",
+      "difficultyRating": 2,
+      "sealSequence": ["serpent","ram","monkey","boar","horse","tiger"],
+      "character": "art/characters/sasuke_artwork.jpg"
+    },
+    {
+      "id": "katon_housenka",
+      "name": "Fire Style: Phoenix Flower Jutsu",
+      "nameES": "Estilo de Fuego: Jutsu Llamas del Fenix",
+      "nameJA": "火遁・鳳仙火の術",
+      "clan": "uchiha",
+      "element": "fire",
+      "difficultyRating": 3,
+      "sealSequence": ["rat","tiger","dog","ox","hare","tiger"],
+      "character": "art/characters/sasuke_artwork.jpg"
+    },
+    {
+      "id": "katon_ryuuka",
+      "name": "Fire Style: Dragon Flame Jutsu",
+      "nameES": "Estilo de Fuego: Jutsu Flama de Dragon",
+      "nameJA": "火遁・龍火の術",
+      "clan": "uchiha",
+      "element": "fire",
+      "difficultyRating": 4,
+      "sealSequence": ["ram","horse","serpent","dragon","rat","ox","tiger"],
+      "character": "art/characters/itachi_artwork.jpg"
+    }
+  ],
+  "clans": [
+    {
+      "id": "hatake",
+      "name": "Hatake Clan",
+      "nameES": "Clan Hatake",
+      "primaryColor": "#b3b3e6",
+      "secondaryColor": "#4d4d4d",
+      "descriptionES": "El famoso ninja de la aldea oculta de la hoja, Kakashi el ninja copia."
+    },
+    {
+      "id": "uchiha",
+      "name": "Uchiha Clan",
+      "nameES": "Clan Uchiha",
+      "primaryColor": "#cc1a1a",
+      "secondaryColor": "#000000",
+      "descriptionES": "El legendario clan de ojos de sharingan, maestros del estilo de fuego."
+    }
+  ]
+}

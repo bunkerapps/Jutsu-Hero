@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jutsu Hero</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100dvh;
+    }
+    #game-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    /* Camera feed sits behind the Phaser canvas */
+    #mp-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    /* PiP camera overlays — positioned dynamically by JS in Battle mode, above Phaser canvas */
+    #cam-p1, #cam-p2 {
+      position: absolute;
+      z-index: 5;
+      opacity: 0.82;
+      pointer-events: none;
+      display: none;
+      border-radius: 4px;
+    }
+    #cam-p1 { border: 2px solid rgba(255,136,0,0.85);  box-shadow: 0 0 10px rgba(255,100,0,0.6); }
+    #cam-p2 { border: 2px solid rgba(68,136,255,0.85); box-shadow: 0 0 10px rgba(50,100,255,0.6); }
+    #mp-status {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-family: monospace;
+      font-size: 12px;
+      background: rgba(0,0,0,0.5);
+      padding: 4px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #audio-ctrl {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    #audio-btn {
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 22px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    #audio-btn:hover { background: rgba(255,255,255,0.15); }
+    #audio-panel {
+      background: rgba(10,10,20,0.92);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 180px;
+      backdrop-filter: blur(6px);
+    }
+    #audio-panel.open { display: flex; }
+    .vol-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .vol-row span.icon { font-size: 16px; width: 20px; text-align: center; }
+    .vol-row input[type=range] {
+      flex: 1;
+      accent-color: #ff8800;
+      cursor: pointer;
+      height: 4px;
+    }
+    .vol-row .pct { width: 28px; text-align: right; color: #aaa; }
+    #mute-toggle {
+      width: 100%;
+      margin-top: 4px;
+      padding: 6px 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #ccc;
+      font-family: monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    #mute-toggle:hover { background: rgba(255,50,50,0.25); color: #fff; }
+    #mute-toggle.active { background: rgba(255,50,50,0.4); border-color: #ff4444; color: #ff8888; }
+    /* ── Shared icon-button style ── */
+    .icon-btn {
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.15); }
+
+    /* ── Right toolbar (cast + camera) ── */
+    #right-toolbar {
+      position: absolute;
+      top: 10px;
+      right: 58px;   /* leave room for audio ctrl */
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    /* ── Cast panel ── */
+    #cast-panel {
+      background: rgba(10,10,20,0.92);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 220px;
+      max-width: 280px;
+      backdrop-filter: blur(6px);
+    }
+    #cast-panel.open { display: flex; }
+    #cast-panel-title {
+      color: #ffdd00;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    #cast-server-url {
+      color: #88ffcc;
+      font-family: monospace;
+      font-size: 10px;
+      word-break: break-all;
+      padding: 4px 6px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 4px;
+    }
+    #cast-dlna-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .cast-device-btn {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      color: #fff;
+      font-family: monospace;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.1s;
+    }
+    .cast-device-btn:hover  { background: rgba(0,200,100,0.2); border-color: #00cc66; }
+    .cast-device-btn.active { background: rgba(0,200,100,0.3); border-color: #00ff88; color: #00ff88; }
+    #cast-scan-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      color: #aaa;
+      font-family: monospace;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    #cast-scan-btn:hover { background: rgba(255,200,0,0.2); color: #ffdd00; }
+    #cast-status-msg {
+      color: #888;
+      font-family: monospace;
+      font-size: 10px;
+    }
+
+    /* ── Camera selector panel ── */
+    #cam-panel {
+      background: rgba(10,10,20,0.92);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 200px;
+      backdrop-filter: blur(6px);
+    }
+    #cam-panel.open { display: flex; }
+    #cam-panel-title {
+      color: #ffdd00;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .cam-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 5px;
+      color: #fff;
+      font-family: monospace;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.1s;
+    }
+    .cam-item:hover  { background: rgba(255,136,0,0.25); border-color: rgba(255,136,0,0.6); }
+    .cam-item.active { background: rgba(255,136,0,0.35); border-color: #ff8800; color: #ffdd00; }
+
+    /* ── Jutsu VFX overlay videos ── */
+    .jutsu-vfx {
+      position: absolute;
+      pointer-events: none;
+      z-index: 8;
+      mix-blend-mode: screen;
+      display: none;
+      object-fit: contain;
+    }
+    canvas {
+      position: absolute;
+    }
+
+    /* ── Fatality full-screen overlay ── */
+    #fatality-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      pointer-events: none;
+      background: rgba(0,0,0,0.35);
+    }
+    #fatality-text {
+      position: absolute;
+      top: 28%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: Impact, 'Arial Black', sans-serif;
+      font-size: clamp(44px, 11vw, 130px);
+      color: #ff1111;
+      text-shadow: 0 0 40px #ff0000, 0 0 80px #ff4400, 4px 4px 0 #000, -3px -3px 0 #000;
+      letter-spacing: 0.06em;
+      transform: scaleY(0) skewX(-4deg);
+      transform-origin: center top;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      will-change: transform;
+    }
+    #fatality-text.show {
+      transform: scaleY(1) skewX(-4deg);
+    }
+    #fatality-sub {
+      position: absolute;
+      top: calc(28% + clamp(50px, 12vw, 145px));
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: monospace;
+      font-size: clamp(14px, 2.5vw, 28px);
+      color: rgba(255,180,0,0.9);
+      letter-spacing: 0.3em;
+      opacity: 0;
+      transition: opacity 0.4s 0.25s;
+    }
+    #fatality-sub.show { opacity: 1; }
+
+    /* ── Tutorial full-screen overlay ── */
+    #tutorial-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      background: rgba(0,0,0,0.96);
+      flex-direction: column;
+      display: none;
+    }
+    #tutorial-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      background: rgba(255,136,0,0.12);
+      border-bottom: 1px solid rgba(255,136,0,0.3);
+      flex-shrink: 0;
+    }
+    #tutorial-back {
+      background: rgba(255,136,0,0.25);
+      border: 1px solid rgba(255,136,0,0.6);
+      border-radius: 6px;
+      color: #ffdd00;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #tutorial-back:hover { background: rgba(255,136,0,0.45); }
+    #tutorial-title {
+      color: #ffdd00;
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    #tutorial-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    #tutorial-video-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #000;
+      min-width: 0;
+    }
+    #tutorial-video-wrap video {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      object-fit: contain;
+      background: #000;
+      display: block;
+    }
+    /* ── Custom practice controls ── */
+    #tutorial-controls {
+      flex-shrink: 0;
+      background: rgba(10,10,20,0.97);
+      border-top: 1px solid rgba(255,136,0,0.25);
+      padding: 10px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    /* Progress scrubber */
+    #tut-progress {
+      width: 100%;
+      accent-color: #ff8800;
+      cursor: pointer;
+      height: 5px;
+    }
+    .tut-ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tut-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      color: #fff;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+      white-space: nowrap;
+    }
+    .tut-btn:hover { background: rgba(255,136,0,0.28); border-color: rgba(255,136,0,0.6); }
+    .tut-btn.active { background: rgba(255,136,0,0.4); border-color: #ff8800; color: #ffdd00; }
+    #tut-playpause { font-size: 18px; padding: 6px 20px; min-width: 52px; }
+    #tut-timecode {
+      color: #aaa;
+      font-family: monospace;
+      font-size: 13px;
+      min-width: 100px;
+      text-align: center;
+    }
+    #tut-loop-label {
+      color: #aaa;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    #tutorial-chapters {
+      width: 220px;
+      flex-shrink: 0;
+      background: rgba(10,10,20,0.98);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #tutorial-chapters-title {
+      padding: 10px 14px;
+      color: #ffdd00;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+    #tutorial-chapters-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    #tutorial-chapters-list::-webkit-scrollbar { width: 4px; }
+    #tutorial-chapters-list::-webkit-scrollbar-thumb { background: rgba(255,136,0,0.4); border-radius: 2px; }
+    .ch-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .ch-btn:hover { background: rgba(255,136,0,0.18); border-color: rgba(255,136,0,0.5); }
+    .ch-btn.active { background: rgba(255,136,0,0.3); border-color: #ff8800; }
+    .ch-btn img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .ch-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .ch-name {
+      color: #ffffff;
+      font-family: monospace;
+      font-size: 11px;
+    }
+    .ch-ja {
+      color: rgba(255,200,0,0.8);
+      font-size: 14px;
+    }
+
+    /* Mobile: chapters below video */
+    @media (max-width: 600px) {
+      #tutorial-body { flex-direction: column; }
+      #tutorial-chapters {
+        width: 100%;
+        height: 140px;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+      #tutorial-chapters-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+      }
+      .ch-btn { flex-direction: column; min-width: 70px; align-items: center; }
+      .ch-info { align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <video id="mp-video" autoplay playsinline muted></video>
+    <canvas id="cam-p1"></canvas>
+    <canvas id="cam-p2"></canvas>
+    <div id="mp-status">Loading MediaPipe…</div>
+    <!-- ── Right toolbar: cast + camera ── -->
+    <div id="right-toolbar">
+      <button id="cast-btn" class="icon-btn" title="Transmitir a TV">📺</button>
+      <div id="cast-panel">
+        <div id="cast-panel-title">TRANSMITIR</div>
+        <div id="cast-server-url" style="display:none"></div>
+        <div id="cast-dlna-list"></div>
+        <button id="cast-scan-btn">🔍 Buscar dispositivos</button>
+        <div id="cast-status-msg">Inicia el servidor para usar DLNA</div>
+      </div>
+      <button id="cam-btn" class="icon-btn" title="Cambiar cámara">📷</button>
+      <div id="cam-panel">
+        <div id="cam-panel-title">CÁMARA</div>
+        <div id="cam-list"></div>
+      </div>
+    </div>
+    <video id="vfx-rasengan" class="jutsu-vfx" src="/assets/audio/video/rasengan.mp4" playsinline muted></video>
+    <video id="vfx-chidori"  class="jutsu-vfx" src="/assets/audio/video/chidori.mp4"  playsinline muted></video>
+    <div id="fatality-overlay">
+      <div id="fatality-text">FINISH HIM!</div>
+      <div id="fatality-sub">COMPLETA TU JUTSU</div>
+    </div>
+    <div id="audio-ctrl">
+      <button id="audio-btn" title="Audio">🔊</button>
+      <div id="audio-panel">
+        <div class="vol-row">
+          <span class="icon">🎵</span>
+          <input type="range" id="vol-music" min="0" max="100" value="70">
+          <span class="pct" id="vm-pct">70</span>
+        </div>
+        <div class="vol-row">
+          <span class="icon">💥</span>
+          <input type="range" id="vol-sfx" min="0" max="100" value="80">
+          <span class="pct" id="vs-pct">80</span>
+        </div>
+        <button id="mute-toggle">🔇 Silenciar todo</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

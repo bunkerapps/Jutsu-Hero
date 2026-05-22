@@ -1,0 +1,114 @@
+{
+  "beatmaps": [
+    {
+      "id": "entrenamiento_12_sellos",
+      "jutsuId": "entrenamiento_12_sellos",
+      "difficultyId": "tutorial",
+      "bpm": 60,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 4.00,  "seal": "rat",     "lane": 0 },
+        { "time": 8.00,  "seal": "ox",      "lane": 1 },
+        { "time": 12.00, "seal": "tiger",   "lane": 2 },
+        { "time": 16.00, "seal": "hare",    "lane": 3 },
+        { "time": 20.00, "seal": "dragon",  "lane": 0 },
+        { "time": 24.00, "seal": "serpent", "lane": 1 },
+        { "time": 28.00, "seal": "horse",   "lane": 2 },
+        { "time": 32.00, "seal": "ram",     "lane": 3 },
+        { "time": 36.00, "seal": "monkey",  "lane": 0 },
+        { "time": 40.00, "seal": "bird",    "lane": 1 },
+        { "time": 44.00, "seal": "dog",     "lane": 2 },
+        { "time": 48.00, "seal": "boar",    "lane": 3 }
+      ]
+    },
+    {
+      "id": "kage_bunshin_normal",
+      "jutsuId": "kage_bunshin",
+      "difficultyId": "normal",
+      "bpm": 120,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 2.00, "seal": "ram",     "lane": 1 },
+        { "time": 3.00, "seal": "serpent", "lane": 2 },
+        { "time": 4.00, "seal": "tiger",   "lane": 0 }
+      ]
+    },
+    {
+      "id": "rasengan_hard",
+      "jutsuId": "rasengan",
+      "difficultyId": "hard",
+      "bpm": 140,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 1.71, "seal": "boar",  "lane": 0 },
+        { "time": 2.57, "seal": "ram",   "lane": 1 },
+        { "time": 3.43, "seal": "tiger", "lane": 2 }
+      ]
+    },
+    {
+      "id": "chidori_normal",
+      "jutsuId": "chidori",
+      "difficultyId": "normal",
+      "bpm": 120,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 2.00, "seal": "ox",     "lane": 0 },
+        { "time": 3.00, "seal": "hare",   "lane": 1 },
+        { "time": 4.00, "seal": "monkey", "lane": 2 }
+      ]
+    },
+    {
+      "id": "katon_goukakyuu_normal",
+      "jutsuId": "katon_goukakyuu",
+      "difficultyId": "normal",
+      "bpm": 120,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 2.00, "seal": "serpent", "lane": 0 },
+        { "time": 3.00, "seal": "ram",     "lane": 1 },
+        { "time": 4.00, "seal": "monkey",  "lane": 2 },
+        { "time": 5.00, "seal": "boar",    "lane": 3 },
+        { "time": 6.00, "seal": "horse",   "lane": 0 },
+        { "time": 7.00, "seal": "tiger",   "lane": 1 }
+      ]
+    },
+    {
+      "id": "katon_housenka_hard",
+      "jutsuId": "katon_housenka",
+      "difficultyId": "hard",
+      "bpm": 140,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 1.71, "seal": "rat",    "lane": 0 },
+        { "time": 2.36, "seal": "tiger",  "lane": 1 },
+        { "time": 3.00, "seal": "dog",    "lane": 2 },
+        { "time": 3.64, "seal": "ox",     "lane": 3 },
+        { "time": 4.29, "seal": "hare",   "lane": 0 },
+        { "time": 4.93, "seal": "tiger",  "lane": 1 }
+      ]
+    },
+    {
+      "id": "katon_ryuuka_hard",
+      "jutsuId": "katon_ryuuka",
+      "difficultyId": "hard",
+      "bpm": 140,
+      "audioFile": "assets/audio/music/menu.mp3",
+      "audioOffsetSeconds": 0,
+      "notes": [
+        { "time": 1.71, "seal": "ram",     "lane": 0 },
+        { "time": 2.36, "seal": "horse",   "lane": 1 },
+        { "time": 3.00, "seal": "serpent", "lane": 2 },
+        { "time": 3.64, "seal": "dragon",  "lane": 3 },
+        { "time": 4.29, "seal": "rat",     "lane": 0 },
+        { "time": 4.93, "seal": "ox",      "lane": 1 },
+        { "time": 5.57, "seal": "tiger",   "lane": 2 }
+      ]
+    }
+  ]
+}

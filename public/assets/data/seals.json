@@ -1,0 +1,16 @@
+{
+  "seals": [
+    { "id": "rat",     "index": 0,  "japanese": "Ne",      "sprite": "art/seals/Ne.jpg",      "spriteBW": "art/seals-bw/Ne.png"      },
+    { "id": "ox",      "index": 1,  "japanese": "Ushi",    "sprite": "art/seals/Ushi.jpg",    "spriteBW": "art/seals-bw/Ushi.png"    },
+    { "id": "tiger",   "index": 2,  "japanese": "Tora",    "sprite": "art/seals/Tora.jpg",    "spriteBW": "art/seals-bw/Tora.png"    },
+    { "id": "hare",    "index": 3,  "japanese": "U",       "sprite": "art/seals/U.jpg",       "spriteBW": "art/seals-bw/U.png"       },
+    { "id": "dragon",  "index": 4,  "japanese": "Tatsu",   "sprite": "art/seals/Tatsu.jpg",   "spriteBW": "art/seals-bw/Tatsu.png"   },
+    { "id": "serpent", "index": 5,  "japanese": "Mi",      "sprite": "art/seals/Mi.jpg",      "spriteBW": "art/seals-bw/Mi.png"      },
+    { "id": "horse",   "index": 6,  "japanese": "Uma",     "sprite": "art/seals/Uma.jpg",     "spriteBW": "art/seals-bw/Uma.png"     },
+    { "id": "ram",     "index": 7,  "japanese": "Hitsuji", "sprite": "art/seals/Hitsuji.jpg", "spriteBW": "art/seals-bw/Hitsuji.png" },
+    { "id": "monkey",  "index": 8,  "japanese": "Saru",    "sprite": "art/seals/Saru.jpg",    "spriteBW": "art/seals-bw/Saru.png"    },
+    { "id": "bird",    "index": 9,  "japanese": "Tori",    "sprite": "art/seals/Tori.jpg",    "spriteBW": "art/seals-bw/Tori.png"    },
+    { "id": "dog",     "index": 10, "japanese": "Inu",     "sprite": "art/seals/Inu.jpg",     "spriteBW": "art/seals-bw/Inu.png"     },
+    { "id": "boar",    "index": 11, "japanese": "I",       "sprite": "art/seals/I.jpg",       "spriteBW": "art/seals-bw/I.png"       }
+  ]
+}

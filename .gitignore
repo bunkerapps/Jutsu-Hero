@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+**/.DS_Store
+# video tutorial demasiado grande para GitHub (163MB)
+public/assets/audio/video/hand_signs_tutorial.mp4

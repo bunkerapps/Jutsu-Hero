@@ -1,0 +1,34 @@
+{
+  "difficulties": [
+    {
+      "id": "tutorial",
+      "name": "Tutorial",
+      "speedMultiplier": 0.4,
+      "timingWindows": {
+        "perfect": 350,
+        "good":    600,
+        "ok":      1000
+      }
+    },
+    {
+      "id": "normal",
+      "name": "Normal",
+      "speedMultiplier": 0.75,
+      "timingWindows": {
+        "perfect": 180,
+        "good":    350,
+        "ok":      550
+      }
+    },
+    {
+      "id": "hard",
+      "name": "Hard",
+      "speedMultiplier": 1.0,
+      "timingWindows": {
+        "perfect": 140,
+        "good":    260,
+        "ok":      420
+      }
+    }
+  ]
+}
