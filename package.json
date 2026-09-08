@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "scripts/deploy.sh",
+    "deploy:full": "scripts/deploy.sh --full"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.34",
