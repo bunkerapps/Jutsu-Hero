@@ -13,7 +13,7 @@ export class SealClassifier {
   async init(modelUrl: string): Promise<SealClassifier> {
     // Serve WASM locally to avoid CDN MIME/COEP issues. numThreads=1 avoids
     // SharedArrayBuffer requirement (no COEP needed for single-threaded WASM).
-    ort.env.wasm.wasmPaths = "assets/ort-wasm/";
+    ort.env.wasm.wasmPaths = "./assets/ort-wasm/";
     ort.env.wasm.numThreads = 1;
     this.session = await ort.InferenceSession.create(modelUrl, {
       executionProviders: ["wasm"],
