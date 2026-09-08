@@ -3,10 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Jutsu Hero — unofficial, non-commercial fan-made rhythm game. Perform Naruto-inspired hand seals with your webcam. Not affiliated with or endorsed by Masashi Kishimoto, Shueisha, Studio Pierrot, VIZ Media, or Bandai Namco." />
-  <title>Jutsu Hero</title>
+  <meta name="description" content="Play Jutsu Hero free in your browser: perform real Naruto-style hand seals via webcam and battle friends online in real time. Unofficial fan-made rhythm game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://jutsu-hero.bunkerapps.net/" />
+  <meta name="theme-color" content="#000000" />
+  <title>Jutsu Hero — Naruto Hand Seal Rhythm Game (Free, Browser)</title>
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jutsu-hero.bunkerapps.net/" />
+  <meta property="og:site_name" content="Jutsu Hero" />
+  <meta property="og:title" content="Jutsu Hero — Naruto Hand Seal Rhythm Game" />
+  <meta property="og:description" content="Perform real Naruto-style hand seals via webcam and battle friends online in real time. Free, unofficial fan-made rhythm game — no download required." />
+  <meta property="og:image" content="https://jutsu-hero.bunkerapps.net/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Jutsu Hero online battle: two players casting Naruto hand-seal jutsus in real time" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jutsu Hero — Naruto Hand Seal Rhythm Game" />
+  <meta name="twitter:description" content="Perform real Naruto-style hand seals via webcam and battle friends online in real time. Free, unofficial fan-made rhythm game." />
+  <meta name="twitter:image" content="https://jutsu-hero.bunkerapps.net/og-image.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Jutsu Hero",
+    "url": "https://jutsu-hero.bunkerapps.net/",
+    "description": "A free, browser-based rhythm game where players perform Naruto-style hand seals via webcam, recognized in real time by a computer-vision model (MediaPipe + a custom ONNX classifier). Includes single-player practice, local split-screen battles, and online multiplayer.",
+    "image": "https://jutsu-hero.bunkerapps.net/og-image.jpg",
+    "genre": ["Rhythm", "Fighting"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "playMode": ["SinglePlayer", "MultiPlayer", "CoOp"],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Diego Pacheco"
+    },
+    "sameAs": ["https://github.com/bunkerapps/Jutsu-Hero"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Jutsu Hero?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jutsu Hero is a free, browser-based rhythm game where you perform Naruto-style hand seals in front of your webcam. A real-time computer-vision model recognizes each seal and translates correct sequences into jutsus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Jutsu Hero recognize hand seals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It uses MediaPipe Hands to track 21 hand landmarks from your webcam feed, then a custom-trained ONNX classifier predicts which of the 12 zodiac hand seals you are forming, all running client-side in the browser with no backend required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Jutsu Hero free to play?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Jutsu Hero is completely free, requires no download or account, and runs directly in a modern browser at jutsu-hero.bunkerapps.net."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I play Jutsu Hero online with friends?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Online Battle mode lets you create a room, share a short code with a friend, and fight in real time from separate devices, including 1v1 and 4-player battle royale."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Jutsu Hero affiliated with or endorsed by the Naruto franchise?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Jutsu Hero is an unofficial, non-commercial fan project. It is not affiliated with, authorized, or endorsed by Masashi Kishimoto, Shueisha, Studio Pierrot, VIZ Media, or Bandai Namco. Naruto is the property of its respective owners."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a webcam to play Jutsu Hero?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A webcam is recommended for the full hand-seal experience, but Jutsu Hero also has a full keyboard fallback (keys 1-8) for players without camera access."
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Visually hidden but present in the DOM for crawlers, screen readers,
+       and AI answer engines — the actual game renders in a <canvas> and
+       has no crawlable text of its own. */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     body {
       background: #000;
       overflow: hidden;
@@ -529,6 +649,55 @@
   </style>
 </head>
 <body>
+  <div class="sr-only">
+    <h1>Jutsu Hero — Naruto Hand Seal Rhythm Game</h1>
+    <p>
+      Jutsu Hero is a free, browser-based rhythm game where you perform
+      Naruto-style hand seals in front of your webcam. A real-time
+      computer-vision model (MediaPipe Hands + a custom-trained ONNX
+      classifier) recognizes each of the 12 zodiac hand seals and turns
+      correct sequences into jutsus — Kage Bunshin no Jutsu, Chidori,
+      Katon: Goukakyuu no Jutsu, and more. No download, no account, no
+      backend required: it runs entirely in your browser.
+    </p>
+    <h2>Game modes</h2>
+    <ul>
+      <li>Single Player — practice hand seals against the clock.</li>
+      <li>Local Battle — two players, split-screen, same device.</li>
+      <li>Online Battle — create a room, share a code, and fight friends
+        in real time from separate devices (1v1 or 4-player battle
+        royale).</li>
+    </ul>
+    <h2>Frequently asked questions</h2>
+    <h3>What is Jutsu Hero?</h3>
+    <p>Jutsu Hero is a free, browser-based rhythm game where you perform
+      Naruto-style hand seals in front of your webcam. A real-time
+      computer-vision model recognizes each seal and translates correct
+      sequences into jutsus.</p>
+    <h3>How does Jutsu Hero recognize hand seals?</h3>
+    <p>It uses MediaPipe Hands to track 21 hand landmarks from your webcam
+      feed, then a custom-trained ONNX classifier predicts which of the 12
+      zodiac hand seals you are forming, all running client-side in the
+      browser with no backend required.</p>
+    <h3>Is Jutsu Hero free to play?</h3>
+    <p>Yes. Jutsu Hero is completely free, requires no download or
+      account, and runs directly in a modern browser at
+      jutsu-hero.bunkerapps.net.</p>
+    <h3>Can I play Jutsu Hero online with friends?</h3>
+    <p>Yes. Online Battle mode lets you create a room, share a short code
+      with a friend, and fight in real time from separate devices,
+      including 1v1 and 4-player battle royale.</p>
+    <h3>Is Jutsu Hero affiliated with or endorsed by the Naruto franchise?</h3>
+    <p>No. Jutsu Hero is an unofficial, non-commercial fan project. It is
+      not affiliated with, authorized, or endorsed by Masashi Kishimoto,
+      Shueisha, Studio Pierrot, VIZ Media, or Bandai Namco. Naruto is the
+      property of its respective owners.</p>
+    <h3>Do I need a webcam to play Jutsu Hero?</h3>
+    <p>A webcam is recommended for the full hand-seal experience, but
+      Jutsu Hero also has a full keyboard fallback (keys 1-8) for players
+      without camera access.</p>
+    <p>Source code: <a href="https://github.com/bunkerapps/Jutsu-Hero">github.com/bunkerapps/Jutsu-Hero</a></p>
+  </div>
   <div id="game-container">
     <video id="mp-video" autoplay playsinline muted></video>
     <canvas id="cam-p1"></canvas>

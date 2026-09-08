@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jutsu-hero.bunkerapps.net/sitemap.xml

@@ -1,0 +1,24 @@
+# Jutsu Hero
+
+> Free, browser-based rhythm game where players perform Naruto-style hand seals via webcam, recognized in real time by a computer-vision model (MediaPipe Hands + a custom ONNX classifier). No download, no account, no backend required.
+
+Jutsu Hero is an unofficial, non-commercial fan project. It is not affiliated with, authorized, or endorsed by Masashi Kishimoto, Shueisha, Studio Pierrot, VIZ Media, or Bandai Namco. Naruto is the property of its respective owners.
+
+## How it works
+
+- MediaPipe Hands tracks 21 hand landmarks from the webcam feed at ~30fps.
+- A custom-trained ONNX classifier predicts which of the 12 zodiac hand seals the player is forming.
+- Correct sequences (e.g. Ne → Saru → Mi → Inu for Kage Bunshin no Jutsu) trigger a jutsu, dealing damage in battle modes.
+- Everything runs client-side in the browser; no camera access is required thanks to a full keyboard fallback (keys 1-8).
+
+## Game modes
+
+- Single Player — practice hand seals against the clock.
+- Local Battle — two players, split-screen, same device.
+- Online Battle — create a room, share a short code, and fight in real time from separate devices (1v1 or 4-player battle royale) over a self-hosted Socket.io server.
+
+## Links
+
+- Play: https://jutsu-hero.bunkerapps.net/
+- Source code (public, PolyForm Noncommercial license): https://github.com/bunkerapps/Jutsu-Hero
+- Created by: Diego Pacheco (https://github.com/bunkerapps)
