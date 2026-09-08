@@ -85,23 +85,19 @@ Open `http://localhost:5173` in your browser.
 
 ### Online Multiplayer Server
 
-The online mode requires the game server. Set it up on any machine on your
-local network:
+Online Battle mode talks to a companion Socket.io server (room codes, state
+sync). **That server's source is not included in this repository** — Single
+Player and Local Battle (split-screen) work fully offline without it.
 
-```bash
-cd server/
-npm install
-npm run dev   # starts on port 3001
-```
-
-Then set the server URL in a `.env.local` file in the repo root:
+If you're running your own instance, point the client at it via a
+`.env.local` file in the repo root:
 
 ```
-VITE_SERVER_URL=http://<your-machine-ip>:3001
+VITE_SERVER_URL=http://<your-server-host>:3001
 ```
 
-Both players must be on the same network (or the server must be publicly
-accessible via a tunnel like [ngrok](https://ngrok.com)).
+Both players must be able to reach that host (same network, or a tunnel like
+[ngrok](https://ngrok.com)).
 
 ### Production Build
 
@@ -140,7 +136,6 @@ Jutsu-Hero/
 │       ├── audio/       # Music, SFX, voice lines, tutorial video
 │       ├── data/        # beatmaps.json, jutsus.json, seals.json
 │       └── ort-wasm/    # ONNX Runtime WASM binaries
-├── server/              # Node.js + Socket.io multiplayer server
 ├── CONTRIBUTING.md
 ├── CREDITS.md
 ├── DISCLAIMER.md
